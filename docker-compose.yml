@@ -8,11 +8,9 @@ services:
     env_file:
       - .env
     environment:
-      - XDG_DATA_HOME=/root/.local/share
+      - XDG_DATA_HOME=/home/llmuser/.local/share
     volumes:
-      # Persistence (Named Volume)
-      - llm_session_data:/root/.local/share/LLMSession
-      # Error Screenshots
+      - llm_session_data:/home/llmuser/.local/share/LLMSession
       - ./output:/app/output
     ports:
       - "8080:8000"

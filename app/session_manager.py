@@ -17,7 +17,6 @@ class ProviderWorker:
     def __init__(self, provider_name: str, creds: dict, base_path: str):
         self.provider_name = provider_name
         self.creds = creds
-        # Isolation: /root/.local/share/LLMSession/<provider_name>
         self.session_path = os.path.join(base_path, provider_name)
         os.makedirs(self.session_path, exist_ok=True)
         
@@ -123,7 +122,8 @@ class SessionManager:
     """
     def __init__(self):
         self.workers: Dict[str, ProviderWorker] = {}
-        self.base_dir = "/root/.local/share/LLMSession"
+        default_path = os.path.expanduser("~/.local/share/LLMSession")
+        self.base_dir = os.environ.get("LLM_SESSION_DIR", default_path)
 
     async def start_providers(self):
         """
