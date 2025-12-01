@@ -1,7 +1,3 @@
-Here is the comprehensive API documentation for the **LLM Session API**.
-
----
-
 # LLM Session API Documentation
 
 ## Overview
